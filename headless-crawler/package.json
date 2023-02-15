@@ -1,0 +1,15 @@
+{
+  "name": "headless-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "crawl.mjs",
+  "scripts": {
+    "run": "node ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crawlee": "^3.2.2",
+    "playwright": "^1.30.0"
+  }
+}
