@@ -1,42 +1,55 @@
-from json import load
-from os import listdir
-from pprint import pprint
+import nltk
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk.tokenize import wordpunct_tokenize
 
-from nltk import tokenize, stem
+nltk.download('wordnet')
 
 dataset_path = '../headless-crawler/storage/datasets/default'
 
-stemmer = stem.PorterStemmer()
+stemmer = PorterStemmer()
+lemmer = WordNetLemmatizer()
+
+print(lemmer.lemmatize('ft'))
+exit()
 
 
-def normalize(s: str):
-    words = tokenize.wordpunct_tokenize(s.lower().strip())
-    return ' '.join([stemmer.stem(w) for w in words])
+def tokenize(str: str):
+    return wordpunct_tokenize(str.lower().strip())
 
 
-lookup = dict()
+def normalize(str: str):
+    return ' '.join(tokenize(str))
 
 
-def build_lookup():
-    bases = set()
-    for file in listdir(dataset_path):
-        with open(f'{dataset_path}/{file}', 'r') as f:
-            json = load(f)
-            specs = json['specs'].keys()
-            mapped = dict([(spec, normalize(spec)) for spec in specs])
-            for (spec, base) in mapped.items():
-                if base not in bases:
-                    lookup[base] = spec
-                    bases.add(base)
-
-    # pprint(bases)
-    return lookup
+def stem(str: str):
+    tokens = tokenize(str)
+    stems = [stemmer.stem(token) for token in tokens]
+    return ' '.join(stems)
 
 
-build_lookup()
+stemmed_to_normalized = {}
+
+
+def add_stemmed(stemmed: str, original: str):
+    if stemmed not in stemmed_to_normalized.keys():
+        stemmed_to_normalized[stemmed] = normalize(original)
+
+
+dfs = []
 for file in listdir(dataset_path):
     with open(f'{dataset_path}/{file}', 'r') as f:
         json = load(f)
-        normalized_specs = dict([(lookup[normalize(spec)], value) for (spec, value) in json['specs'].items()])
-        pprint(json.keys())
+        normalized_specs = {}
+        for (raw_spec, value) in json['specs'].items():
+            stemmed = stem(raw_spec)
+            add_stemmed(stemmed, raw_spec)
+            normalized_spec = stemmed_to_normalized[stemmed]
+            normalized_specs[normalized_spec] = value
+        json['specs'] = normalized_specs
+        del json['html']
+        dfs.append(pd.json_normalize(json))
+dfs = pd.concat(dfs)
 
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+print(dfs.head())
