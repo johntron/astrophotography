@@ -21,7 +21,13 @@ docs = load_files(
 #         lines = f.readlines()
 #         docs.append(lines)
 
-vectorizer_ng3 = CountVectorizer(ngram_range=(1, 3))
+vectorizer_ng3 = CountVectorizer(
+    ngram_range=(1, 3),
+    lowercase=True,
+    stop_words='english'
+)
 ng3 = vectorizer_ng3.fit_transform(docs.data)
-print(vectorizer_ng3.get_feature_names_out())
-print(ng3[0][0:1000])
+df = pd.DataFrame(ng3.toarray())
+df.columns = vectorizer_ng3.get_feature_names_out()
+print(df.shape)
+print(df[['declination']])
