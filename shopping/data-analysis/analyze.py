@@ -1,27 +1,27 @@
-from json import load
 from os import listdir
+from os.path import splitext
 
-import numpy as np
 import pandas as pd
-import matplotlib
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.datasets import load_files
 
-matplotlib.use('Qt5Agg')
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-dataset_path = '../headless-crawler/storage/datasets/default'
+dataset_path = '../headless-crawler/storage/key_value_stores'
 
-dfs = []
-for file in listdir(dataset_path):
-    with open(f'{dataset_path}/{file}', 'r') as f:
-        json = load(f)
-        dfs.append(pd.json_normalize(json))
+docs = load_files(
+    dataset_path,
+    allowed_extensions=['.txt']
+)
 
-df = pd.concat(dfs)
-df['price'] = df['price'].astype(np.float32)
+# docs = pd.Series()
+# for file in listdir(dataset_path):
+#     if splitext(file)[1] != '.txt':
+#         continue
+#     with open(f'{dataset_path}/{file}', 'r') as f:
+#         lines = f.readlines()
+#         docs.append(lines)
 
-print('\n'.join(list(map(lambda val: val.replace('specs.', '') ,filter(lambda val: 'specs.' in val, df.columns.sort_values())))))
-print(df.dtypes)
-# sns.histplot(df['price'], bins=20, binrange=(0, 5000))
-sns.kdeplot(df[df['price'] < 4000]['price'], bw_adjust=0.5)
-plt.show()
+vectorizer_ng3 = CountVectorizer(ngram_range=(1, 3))
+ng3 = vectorizer_ng3.fit_transform(docs.data)
+print(vectorizer_ng3.get_feature_names_out())
+print(ng3[0][0:1000])

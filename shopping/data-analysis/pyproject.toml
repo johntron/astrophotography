@@ -13,6 +13,7 @@ matplotlib = "^3.6.3"
 pyqt5 = "^5.15.9"
 seaborn = "^0.12.2"
 nltk = "^3.8.1"
+scikit-learn = "^1.2.1"
 
 
 [build-system]
