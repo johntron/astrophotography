@@ -1,4 +1,4 @@
-import {createPlaywrightRouter} from 'crawlee';
+import {createPlaywrightRouter} from '@crawlee/playwright';
 import {handler as productHandler} from "./product.mjs";
 import {handler as categoryHandler} from "./category.mjs";
 

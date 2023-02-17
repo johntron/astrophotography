@@ -4,12 +4,19 @@
   "description": "",
   "main": "crawl.mjs",
   "scripts": {
-    "run": "node ."
+    "run": "node .",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "crawlee": "^3.2.2",
+    "@crawlee/playwright": "^3.2.2",
+    "@crawlee/utils": "^3.2.2",
     "playwright": "^1.30.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.4.3",
+    "jest": "^29.4.3",
+    "ts-node": "^10.9.1"
   }
 }
