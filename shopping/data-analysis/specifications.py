@@ -1,31 +1,14 @@
+from json import load
+from os import listdir
+
 import nltk
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-from nltk.tokenize import wordpunct_tokenize
+import pandas as pd
+
+from preprocessing import normalize, stem
 
 nltk.download('wordnet')
 
 dataset_path = '../headless-crawler/storage/datasets/default'
-
-stemmer = PorterStemmer()
-lemmer = WordNetLemmatizer()
-
-print(lemmer.lemmatize('ft'))
-exit()
-
-
-def tokenize(str: str):
-    return wordpunct_tokenize(str.lower().strip())
-
-
-def normalize(str: str):
-    return ' '.join(tokenize(str))
-
-
-def stem(str: str):
-    tokens = tokenize(str)
-    stems = [stemmer.stem(token) for token in tokens]
-    return ' '.join(stems)
-
 
 stemmed_to_normalized = {}
 

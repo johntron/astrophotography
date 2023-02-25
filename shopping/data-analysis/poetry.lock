@@ -828,6 +828,17 @@ files = [
 ]
 
 [[package]]
+name = "sns"
+version = "0.1"
+description = "SNS utils"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "sns-0.1.tar.gz", hash = "sha256:2d847d23eb8e0ea20054dbadabdecfafc529e4c7a16a6ce70205c4bf8ebc6cf4"},
+]
+
+[[package]]
 name = "threadpoolctl"
 version = "3.1.0"
 description = "threadpoolctl"
@@ -863,4 +874,4 @@ telegram = ["requests"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e6227390c3be9d2aa0c0bb1d0485ea5f74858bc7ea1eb9721b83e9b17dc1dfd6"
+content-hash = "b9c38503c9965690770d4c53e92fcb545da9e72688b0bacb5c0ce62dbb4e4ea2"
