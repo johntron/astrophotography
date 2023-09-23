@@ -1,0 +1,17 @@
+name: process-pipeline
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - conda==23.5.2
+  - setuptools
+  - pip
+  - wheel
+  - conda-content-trust
+  - conda-libmamba-solver
+  - pip
+  - pip:
+      - prefect
+      - watchfiles
+      - gphoto2
+prefix: ./.env
