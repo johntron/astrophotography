@@ -1,0 +1,14 @@
+name: tracking-mount
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - circuitpython-stubs
+      - adafruit-circuitpython-pca9685
+      - adafruit-circuitpython-busdevice
+      - adafruit-circuitpython-register
+      - adafruit-circuitpython-motor
+      - adafruit-circuitpython-motorkit
+prefix: .env
